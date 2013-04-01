@@ -3,7 +3,7 @@ use warnings;
 package DB::Transaction;
 use base qw(Exporter);
 
-our $VERSION = 0.001000; # 0.001.0
+our $VERSION = 0.001001; # 0.001.0
 
 our @EXPORT_OK = qw(run_in_transaction);
 

@@ -174,8 +174,10 @@ sub my_try(&) {
 	sub AUTOLOAD {}
 }
 
-# sometimes destroyers can unintentionally unset $@; we're immune to it
+# On some versions of perl, destroyers may unset $@; we're immune to it.
 {
+	my $expected_exceptions = qr/(?:the hills are alive|an error was encountered in your transaction)/;
+
 	{
 		local $@;
 		eval {
@@ -185,8 +187,7 @@ sub my_try(&) {
 			} db_handle => $stub_dbh, on_error => 'rollback';
 		};
 
-		like( $@, qr/an error was encountered in your transaction/,
-			'if $@ is unintentionally unset on object destruction, we set a sensible default error' );
+		like( $@, $expected_exceptions, 'if $@ is unintentionally unset on object destruction, we set a sensible default error' );
 	}
 
 	{
@@ -196,7 +197,6 @@ sub my_try(&) {
 			die 'the hills are alive';
 		} db_handle => $stub_dbh, on_error => 'continue';
 
-		like( $@, qr/an error was encountered in your transaction/,
-			'if $@ is unintentionally unset on object destruction, we set a sensible default error' );
+		like( $@, $expected_exceptions, 'if $@ is unintentionally unset on object destruction, we set a sensible default error' );
 	}
 }
