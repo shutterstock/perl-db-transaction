@@ -5,6 +5,7 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
 	NAME           => 'DB::Transaction',
 	AUTHOR         => 'Shutterstock, Inc. <sstk@cpan.org>',
+	LICENSE				 => 'GNU',
 	VERSION_FROM   => 'lib/DB/Transaction.pm',
 	ABSTRACT_FROM  => 'lib/DB/Transaction.pm',
 	PL_FILES => {},
